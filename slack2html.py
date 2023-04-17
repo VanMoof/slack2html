@@ -26,12 +26,20 @@ class CustomFreezer(Freezer):
               help="Output directory for HTML files")
 @click.option('--channels', type=click.STRING,
               help="A comma separated list of channels to parse.")
+@click.option('--groups', type=click.STRING,
+              help="A comma separated list of groups (private channels) to parse.")
+@click.option('--exclude-dms', is_flag=True,
+              default=False,
+              help="Exclude DMs from parsing.")
+@click.option('--exclude-mpims', is_flag=True,
+              default=False,
+              help="Exclude multiple users DMs from parsing.")
 @click.option('--no-browser', is_flag=True,
               help="If you do not want a browser to open "
                    "automatically, set this.")
 @click.option('--debug', is_flag=True)
-def main(archive, output_dir, channels, no_browser, debug):
-    configure_app(app=app, archive=archive, channels=channels, no_sidebar=False, no_external_references=False, debug=debug)
+def main(archive, output_dir, channels, groups, exclude_dms, exclude_mpims, no_browser, debug):
+    configure_app(app=app, archive=archive, channels=channels, groups=groups, exclude_dms=exclude_dms, exclude_mpims=exclude_mpims, no_sidebar=False, no_external_references=False, debug=debug)
     # We need relative URLs, otherwise channel refs do not work
     app.config["FREEZER_RELATIVE_URLS"] = True
     # Use a custom subclass of Freezer which allows to overwrite
